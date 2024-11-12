@@ -87,7 +87,7 @@ Here’s an example of a `config.json` file:
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the UNLICENSE. See the [UNLICENSE](UNLICENSE) file for details.
 
 ## Acknowledgments
 
