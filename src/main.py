@@ -4,6 +4,7 @@ import os
 import re
 import yt_dlp
 import json
+import pandas as pd
 
 def load_config():
     with open('config.json', 'r') as config_file:
@@ -44,9 +45,25 @@ def download_youtube_audio(url, config):
     except Exception as e:
         print(f"Error downloading {url}: {str(e)}")
 
+def download_from_excel(config):
+    excel_file = config.get('excel_file')
+    if os.path.exists(excel_file):
+        df = pd.read_excel(excel_file)
+        if not df.empty:
+            for index, row in df.iterrows():
+                url = row[0]
+                if isinstance(url, str) and ("youtube.com/watch?v=" in url or "youtu.be/" in url):
+                    download_youtube_audio(url, config)
+        else:
+            print("The Excel file is empty.")
+    else:
+        print(f"Excel file not found: {excel_file}")
+
 def monitor_clipboard(config):
     previous_clipboard = pyperclip.paste()
     backlog = []
+
+    download_from_excel(config)
 
     while True:
         current_clipboard = pyperclip.paste()
